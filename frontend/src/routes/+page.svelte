@@ -9,7 +9,7 @@
   import Spinner from '$lib/icons/spinner.svelte';
   import Warning from '$lib/components/Warning.svelte';
   import { lcmLiveStatus, lcmLiveActions, LCMLiveStatus } from '$lib/lcmLive';
-  import { mediaStreamActions, onFrameChangeStore } from '$lib/mediaStream';
+  import { onFrameChangeStore } from '$lib/mediaStream';
   import { getPipelineValues, deboucedPipelineValues } from '$lib/store';
 
   let pipelineParams: Fields;
@@ -25,7 +25,22 @@
   });
 
   async function getSettings() {
-    const settings = await fetch('/api/settings').then((r) => r.json());
+    // Mock settings data
+    const settings = {
+      input_params: {
+        properties: {
+          width: { default: 512 },
+          height: { default: 512 }
+        }
+      },
+      info: {
+        properties: {
+          input_mode: { default: PipelineMode.IMAGE }
+        }
+      },
+      max_queue_size: 10,
+      page_content: '<p>Page content</p>'
+    };
     pipelineParams = settings.input_params.properties;
     pipelineInfo = settings.info.properties;
     isImageMode = pipelineInfo.input_mode.default === PipelineMode.IMAGE;
@@ -44,7 +59,8 @@
     if (!queueCheckerRunning) {
       return;
     }
-    const data = await fetch('/api/queue').then((r) => r.json());
+    // Mock queue size data
+    const data = { queue_size: 5 };
     currentQueueSize = data.queue_size;
     setTimeout(getQueueSize, 10000);
   }
@@ -65,18 +81,11 @@
   async function toggleLcmLive() {
     try {
       if (!isLCMRunning) {
-        if (isImageMode) {
-          await mediaStreamActions.enumerateDevices();
-          await mediaStreamActions.start();
-        }
         disabled = true;
         await lcmLiveActions.start(getSreamdata);
         disabled = false;
         toggleQueueChecker(false);
       } else {
-        if (isImageMode) {
-          mediaStreamActions.stop();
-        }
         lcmLiveActions.stop();
         toggleQueueChecker(true);
       }

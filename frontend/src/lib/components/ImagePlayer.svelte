@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { lcmLiveStatus, LCMLiveStatus, streamId } from '$lib/lcmLive';
+  import { lcmLiveStatus, LCMLiveStatus } from '$lib/lcmLive';
   import { getPipelineValues } from '$lib/store';
 
   import Button from '$lib/components/Button.svelte';
   import Floppy from '$lib/icons/floppy.svelte';
   import Expand from '$lib/icons/expand.svelte';
-  import { snapImage, expandWindow } from '$lib/utils';
+  import { snapImage } from '$lib/utils';
 
   $: isLCMRunning = $lcmLiveStatus !== LCMLiveStatus.DISCONNECTED;
   $: console.log('isLCMRunning', isLCMRunning);
@@ -24,10 +24,6 @@
   }
   async function toggleFullscreen() {
     if (isLCMRunning && !isExpanded) {
-      expandedWindow = expandWindow('/api/stream/' + $streamId);
-      expandedWindow.addEventListener('beforeunload', () => {
-        isExpanded = false;
-      });
       isExpanded = true;
     } else {
       expandedWindow?.close();
@@ -45,7 +41,6 @@
       <img
         bind:this={imageEl}
         class="aspect-square w-full rounded-lg"
-        src={'/api/stream/' + $streamId}
       />
     {/if}
     <div class="absolute bottom-1 right-1">
