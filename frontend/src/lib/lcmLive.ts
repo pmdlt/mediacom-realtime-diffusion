@@ -14,6 +14,7 @@ export const lcmLiveStatus = writable<LCMLiveStatus>(initStatus);
 export const streamId = writable<string | null>(null);
 
 let websocket: WebSocket | null = null;
+
 export const lcmLiveActions = {
   async start(getSreamdata: () => any[]) {
     return new Promise((resolve, reject) => {
@@ -93,5 +94,21 @@ export const lcmLiveActions = {
     }
     websocket = null;
     streamId.set(null);
+  }
+};
+
+export const startLcmLive = async (getSreamdata: () => any[]) => {
+  try {
+    await lcmLiveActions.start(getSreamdata);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const stopLcmLive = async () => {
+  try {
+    await lcmLiveActions.stop();
+  } catch (e) {
+    console.error(e);
   }
 };

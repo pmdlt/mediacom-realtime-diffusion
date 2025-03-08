@@ -4,11 +4,10 @@
   import { PipelineMode } from '$lib/types';
   import ImagePlayer from '$lib/components/ImagePlayer.svelte';
   import VideoInput from '$lib/components/VideoInput.svelte';
-  import Button from '$lib/components/Button.svelte';
   import PipelineOptions from '$lib/components/PipelineOptions.svelte';
   import Spinner from '$lib/icons/spinner.svelte';
   import Warning from '$lib/components/Warning.svelte';
-  import { lcmLiveStatus, lcmLiveActions, LCMLiveStatus } from '$lib/lcmLive';
+  import { lcmLiveStatus, startLcmLive, stopLcmLive, LCMLiveStatus } from '$lib/lcmLive';
   import { mediaStreamActions, onFrameChangeStore } from '$lib/mediaStream';
   import { getPipelineValues, deboucedPipelineValues } from '$lib/store';
 
@@ -22,6 +21,7 @@
   let warningMessage: string = '';
   onMount(() => {
     getSettings();
+    startLcmLive(getSreamdata);
   });
 
   async function getSettings() {
@@ -62,30 +62,6 @@
     warningMessage = 'Session timed out. Please try again.';
   }
   let disabled = false;
-  async function toggleLcmLive() {
-    try {
-      if (!isLCMRunning) {
-        if (isImageMode) {
-          await mediaStreamActions.enumerateDevices();
-          await mediaStreamActions.start();
-        }
-        disabled = true;
-        await lcmLiveActions.start(getSreamdata);
-        disabled = false;
-        toggleQueueChecker(false);
-      } else {
-        if (isImageMode) {
-          mediaStreamActions.stop();
-        }
-        lcmLiveActions.stop();
-        toggleQueueChecker(true);
-      }
-    } catch (e) {
-      warningMessage = e instanceof Error ? e.message : '';
-      disabled = false;
-      toggleQueueChecker(true);
-    }
-  }
 </script>
 
 <svelte:head>
@@ -126,13 +102,6 @@
         <ImagePlayer />
       </div>
       <div class="sm:col-span-4 sm:row-start-2">
-        <Button on:click={toggleLcmLive} {disabled} classList={'text-lg my-1 p-2'}>
-          {#if isLCMRunning}
-            Stop
-          {:else}
-            Start
-          {/if}
-        </Button>
         <PipelineOptions {pipelineParams}></PipelineOptions>
       </div>
     </article>
@@ -150,3 +119,10 @@
     @apply text-black dark:bg-gray-900 dark:text-white;
   }
 </style>
+
+<script>
+  import { onDestroy } from 'svelte';
+  onDestroy(() => {
+    stopLcmLive();
+  });
+</script>
