@@ -19,13 +19,13 @@ import math
 base_model = "stabilityai/sdxl-turbo"
 taesd_model = "madebyollin/taesdxl"
 
-default_prompt = "close-up photography of old man standing in the rain at night, in a street lit by lamps, leica 35mm summilux"
+default_prompt = "A young girl with rosy cheeks and bright eyes, dressed in traditional Swiss alpine clothing, stands joyfully on a lush green mountain meadow. She has long, flowing brown hair tied in two braids, and she wears a simple yet charming dress with an apron. Around her, the majestic Swiss Alps rise with snow-capped peaks under a clear blue sky."
 default_negative_prompt = "blurry, low quality, render, 3D, oversaturated"
 page_content = """
 <h1 class="text-3xl font-bold">Testez la démo que nous préparons pour Osaka 2025 !</h1>
 <h3 class="text-xl font-bold">Changez le prompt et voyez les changements s'effectuer en direct.</h3>
 <p class="text-sm">
- Celui ou celle qui trouvera le meilleur prompt se verra offrir une bière à Sat' ! 🍻
+ Celui ou celle qui trouvera le meilleur prompt (qu'on utilisera pour Osaka) se verra offrir une bière à Sat' par Paul ! 🍻
 </p>
 """
 
@@ -59,10 +59,10 @@ class Pipeline:
             1, min=1, max=10, title="Steps", field="range", hide=True, id="steps"
         )
         width: int = Field(
-            768, min=2, max=15, title="Width", disabled=True, hide=True, id="width"
+            512, min=2, max=15, title="Width", disabled=True, hide=True, id="width"
         )
         height: int = Field(
-            768, min=2, max=15, title="Height", disabled=True, hide=True, id="height"
+            512, min=2, max=15, title="Height", disabled=True, hide=True, id="height"
         )
         guidance_scale: float = Field(
             1.0,
