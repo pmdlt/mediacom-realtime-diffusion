@@ -115,6 +115,8 @@
     ></video>
     <canvas bind:this={canvasEl} class="absolute left-0 top-0 aspect-square w-full object-cover"
     ></canvas>
+    <!-- EPFL logo -->
+    <img src="/epfl-logo.svg" alt="EPFL Logo" class="epfl-logo" />
   </div>
   <div class="absolute left-0 top-0 flex aspect-square w-full items-center justify-center">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 448" class="w-40 p-5 opacity-20">
@@ -125,3 +127,13 @@
     </svg>
   </div>
 </div>
+
+<style>
+  .epfl-logo {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 50px; /* Adjust the size as needed */
+    opacity: 0.8; /* Adjust the opacity as needed */
+  }
+</style>

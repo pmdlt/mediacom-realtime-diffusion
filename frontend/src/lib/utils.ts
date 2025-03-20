@@ -43,56 +43,61 @@ export function snapImage(imageEl: HTMLImageElement, info: IImageInfo) {
   }
 }
 
-export function expandWindow(streamURL: string, type: windowType = windowType.image) {
-  const newWindow = window.open(
+export function expandWindow(url: string): Window {
+  const expandedWindow = window.open(
     '',
     '_blank',
-    'width=1024,height=1024,scrollbars=0,resizable=1,toolbar=0,menubar=0,location=0,directories=0,status=0'
-  ) as Window;
+    'toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=800,height=600'
+  );
 
-  const html = `
-      <html>
-          <head>
-              <title>Real-Time Latent Consistency Model</title>
-              <style>
-                  body {
-                      margin: 0;
-                      padding: 0;
-                      background-color: black;
-                  }
-              </style>
-          </head>
-          <body>
-              <script>
-                  let isFullscreen = false;
-                  window.onkeydown = function(event) {
-                      switch (event.code) {
-                          case "Escape":
-                              window.close();
-                              break;
-                          case "Enter":
-                              if (isFullscreen) {
-                                  document.exitFullscreen();
-                                  isFullscreen = false;
-                              } else {
-                                  document.documentElement.requestFullscreen();
-                                  isFullscreen = true;
-                              }
-                              break;
-                      }
-                  }
-              </script>
-          </body>
-      </html>
-      `;
-  newWindow.document.write(html);
+  if (expandedWindow) {
+    expandedWindow.document.write(`
+    <html>
+    <head>
+    <title>Expanded View</title>
+    <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: black;
+      position: relative;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    .epfl-logo {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      width: 20%;
+      height: auto;
+      opacity: 0.5;
+    }
+    .watermark {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      color: white;
+      font-size: 30px;
+      opacity: 0.7;
+    }
+    </style>
+    </head>
+    <body>
+    <img src="${url}" alt="Expanded Image">
+    <img src="/epfl-logo.svg" alt="EPFL Logo" class="epfl-logo">
+    <div class="watermark">AI Generated Content, Osaka 2025</div>
+    <script>
+      document.documentElement.requestFullscreen().catch(console.error);
+    </script>
+    </body>
+    </html>
+    `);
+  }
 
-  const img = newWindow.document.createElement('img');
-  img.src = streamURL;
-  img.style.width = '100%';
-  img.style.height = '100%';
-  img.style.objectFit = 'contain';
-  newWindow.document.body.appendChild(img);
-
-  return newWindow;
+  return expandedWindow;
 }

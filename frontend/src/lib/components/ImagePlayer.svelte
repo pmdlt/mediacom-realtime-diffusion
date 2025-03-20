@@ -71,4 +71,16 @@
       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
     />
   {/if}
+  <!-- EPFL logo -->
+  <img src="/epfl-logo.svg" alt="EPFL Logo" class="epfl-logo" />
 </div>
+
+<style>
+  .epfl-logo {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 50px; /* Adjust the size as needed */
+    opacity: 0.8; /* Adjust the opacity as needed */
+  }
+</style>

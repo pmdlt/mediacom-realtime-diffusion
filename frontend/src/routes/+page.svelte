@@ -143,10 +143,20 @@
       <p>Loading...</p>
     </div>
   {/if}
+    <!-- EPFL logo at the bottom right of the page -->
+    <img src="/epfl-logo.svg" alt="EPFL Logo" class="epfl-logo">
 </main>
 
 <style lang="postcss">
   :global(html) {
     @apply text-black dark:bg-gray-900 dark:text-white;
+  }
+
+  .epfl-logo {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 100px; /* Adjust the size as needed */
+    opacity: 0.8; /* Adjust the opacity as needed */
   }
 </style>
