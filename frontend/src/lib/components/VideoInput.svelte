@@ -117,6 +117,7 @@
     ></canvas>
     <!-- EPFL logo -->
     <img src="/epfl-logo.svg" alt="EPFL Logo" class="epfl-logo" />
+    <div class="epfl-text">Input Video</div>
   </div>
   <div class="absolute left-0 top-0 flex aspect-square w-full items-center justify-center">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 448" class="w-40 p-5 opacity-20">
@@ -131,9 +132,16 @@
 <style>
   .epfl-logo {
     position: absolute;
-    bottom: 10px;
+    top: 10px; /* Changed from bottom to top */
     right: 10px;
-    width: 50px; /* Adjust the size as needed */
-    opacity: 0.8; /* Adjust the opacity as needed */
+    width: 100px; /* Adjust the size as needed */
+    opacity: 0.5; /* Adjust the opacity as needed */
+  }
+  .epfl-text {
+    position: absolute;
+    top: 40px; /* Adjust this to position the text below the logo */
+    right: 10px;
+    font-size: 20px; /* Adjust the font size as needed */
+    text-align: center;
   }
 </style>

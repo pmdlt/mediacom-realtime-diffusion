@@ -73,14 +73,22 @@
   {/if}
   <!-- EPFL logo -->
   <img src="/epfl-logo.svg" alt="EPFL Logo" class="epfl-logo" />
+  <div class="epfl-text">AI Generated</div>
 </div>
 
 <style>
   .epfl-logo {
     position: absolute;
-    bottom: 10px;
+    top: 10px; /* Changed from bottom to top */
     right: 10px;
-    width: 50px; /* Adjust the size as needed */
-    opacity: 0.8; /* Adjust the opacity as needed */
+    width: 100px; /* Adjust the size as needed */
+    opacity: 0.5; /* Adjust the opacity as needed */
+  }
+  .epfl-text {
+    position: absolute;
+    top: 40px; /* Adjust this to position the text below the logo */
+    right: 10px;
+    font-size: 20px; /* Adjust the font size as needed */
+    text-align: center;
   }
 </style>
